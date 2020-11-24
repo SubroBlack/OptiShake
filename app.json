@@ -1,0 +1,11 @@
+{
+  "name": "OptiShake",
+  "displayName": "OptiShake",
+  "version": "0.0.2",
+  "icon": "./assets/optishake.png",
+  "splash": {
+    "image": "./assets/optishake_bg.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#000000"
+  }
+}
