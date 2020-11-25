@@ -46,7 +46,7 @@ useEffect(() => {
 
 // Setting the Port 
 const port = useSelector(state => state.port);
-console.log("Main: port opened successfully: ", port);
+console.log("Main Port", port);
 
 // Listen to the Port
 useEffect(() => {

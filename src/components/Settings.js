@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 const Settings = () => {
   // States
   const [response, setResponse] = useState("");
-  const [signal, setSignal] = useState('');
+  const [signal, setSignal] = useState('AA550401110116');
 
   // Get the Port
   const port = useSelector(state => state.port);

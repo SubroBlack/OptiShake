@@ -51,12 +51,14 @@ const theme = {
   card: {
     display: "flex",
     backgroundColor: "rgb(240, 240, 240)",
+    borderRadius: 6,
     margin: 8,
     padding: 8,
   },
   imageSize: {
     small: 64,
-    madium: 128
+    medium: 128,
+    large: 256,
   }
 };
 

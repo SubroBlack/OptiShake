@@ -1,8 +1,17 @@
 [
   {
     "first4pumps": "AA550401010207"
+  }
+  {
+    "pumpsRunning": "A55A030C0513"
   },
   {
-    "drink1": "asds"
+    "machineWaiting":  "A55A030C101E"
+  },
+  {
+    "drinkOrdered": "A55A03010003"
+  },
+  {
+    "recipeSet": "A55A03150017"
   }
 ]

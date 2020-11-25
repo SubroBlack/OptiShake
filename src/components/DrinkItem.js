@@ -1,5 +1,5 @@
-import React from "react";
-import { View, StyleSheet, Image, TouchableWithoutFeedback } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Image, TouchableWithoutFeedback, Pressable } from "react-native";
 import theme from "../theme";
 
 import Text from "./Text";
@@ -11,10 +11,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   cardImage: {
-    height: theme.imageSize.small,
-    width: theme.imageSize.small,
+    height: theme.imageSize.large,
+    width: theme.imageSize.large,
     marginRight: theme.margin.medium,
     borderRadius: 6,
+    margin: theme.margin.thick
   },
   info: {
     padding: theme.padding.thin,
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
     color: theme.colors.lightText,
     fontWeight: "bold",
     borderRadius: 4,
+    textAlign: "center",
   },
   cardBar: {
     flexDirection: "row",
@@ -35,9 +37,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: theme.justifyContent.spaced,
   },
+  hide: {
+    display: "none"
+  }
 });
 
 const DrinkItem = (props) => {
+  const [detailed, setDetailed] = useState(false);
   const { item, order } = props;
 
   // Number Formatter
@@ -47,29 +53,9 @@ const DrinkItem = (props) => {
       : Math.sign(num) * Math.abs(num);
   };
 
-  return (
-    <View style={styles.card}>
-      <View style={styles.cardSection}>
-        <Image style={styles.cardImage} source={{ uri: item.drinkImgUrl }} />
-
-        <View style={styles.info}>
-          <Text fontWeight="bold">{item.fullName}</Text>
-          <Text>{item.description}</Text>
-
-          <View style={styles.cardBar}>
-            <Text style={styles.cardButton} fontWeight="bold">
-              {item.price}
-            </Text>
-            <TouchableWithoutFeedback onPress={() => order(item.machineCodes)}>
-              <Text style={styles.cardButton} fontWeight="bold">
-                Purchase
-              </Text>
-            </TouchableWithoutFeedback>
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.infoBar}>
+  //Info Section
+  /*
+    <View style={styles.infoBar}>
         <View style={styles.info}>
           <Text fontWeight="bold">{kFormatter(item.unitsSold)}</Text>
           <Text>Units Sold</Text>
@@ -87,7 +73,28 @@ const DrinkItem = (props) => {
           <Text>Rating</Text>
         </View>
       </View>
+  */
 
+  return (
+    <View style={styles.card}>
+      
+      <View style={styles.cardSection}>
+        <Pressable onPress={() => setDetailed(!detailed)}>
+          <Image style={styles.cardImage} source={{ uri: item.drinkImgUrl }} />
+        </Pressable>
+      </View>
+
+      <View style={detailed? styles.info : styles.hide}>
+        <Text fontWeight="bold">{item.fullName}</Text>  
+        <Text>{item.description}</Text>
+        <Text fontWeight="bold">{item.price}</Text>
+
+        <Pressable onPress={() => order(item.machineCodes)}>
+          <Text style={styles.cardButton} fontWeight="bold">
+            BUY
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
