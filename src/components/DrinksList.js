@@ -1,8 +1,9 @@
 import React from "react";
 import { FlatList, View, StyleSheet, SafeAreaView, Text, Pressable } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import {useHistory} from "react-router-dom";
 import { command } from "../reducers/command";
-import machine from "../services/machine";
+import {setDrink} from "../reducers/drink";
 import theme from "../theme";
 import drinks from "../drinks.json";
 
@@ -31,11 +32,17 @@ const DrinksList = () => {
   // Getting the port 
   const port = useSelector(state => state.port);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // Order a drink
+  /*
+    This function runs the command to set the recipe for selected drink and 
+    saves the command for ordering drink on the app state to be run when user is authenticated
+  */
   const order = (code) => {
     dispatch(command(port, code.recipe));
-    dispatch(command(port, code.order));
+    dispatch(setDrink(code.order));
+    history.push("/auth");
   }
 
   return (

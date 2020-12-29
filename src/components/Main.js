@@ -15,7 +15,7 @@ import AppBar from './AppBar';
 import theme from '../theme';
 import BastenGaoTrial from './BastenGaoTrial';
 import Settings from "./Settings";
-
+import AuthPage from './AuthPage';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,8 +33,9 @@ const styles = StyleSheet.create({
 const Main = () => {
 
 // States
-// const [response, setResponse] = useState("");
-const response = useSelector(state => state.response)
+const response = useSelector(state => state.response);
+const drink = useSelector(state => state.drink);
+const user = useSelector(state => state.user);
 
 // React.Redux Hooks
 const dispatch = useDispatch();
@@ -66,10 +67,19 @@ useEffect(() => {
         <Route path="/settings" exact>
           <Settings />
         </Route>
+        <Route path="/auth" exact>
+          <AuthPage />
+        </Route>
         <Redirect to="/" />
       </NativeRouter>
       <Text>
         Latest Reply from the Machine: {response}
+      </Text>
+      <Text>
+        Latest Drink Selected: {drink}
+      </Text>
+      <Text>
+        Current User: {user ? user.name : null}
       </Text>
     </View>
   );

@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.backgroundColors.dark,
     flexDirection: "row",
-    paddingLeft: theme.padding.medium
+    paddingLeft: theme.padding.medium,
+    paddingVertical: theme.padding.medium,
   },
 });
 
