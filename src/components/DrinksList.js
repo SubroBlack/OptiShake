@@ -39,10 +39,10 @@ const DrinksList = () => {
     This function runs the command to set the recipe for selected drink and 
     saves the command for ordering drink on the app state to be run when user is authenticated
   */
-  const order = (code) => {
-    dispatch(command(port, code.recipe));
-    dispatch(setDrink(code.order));
-    history.push("/auth");
+  const order = (drink) => {
+    dispatch(command(port, drink.machineCodes.recipe));
+    dispatch(setDrink(drink));
+    history.push("/scan");
   }
 
   return (

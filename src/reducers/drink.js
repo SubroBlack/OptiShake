@@ -7,11 +7,11 @@ const SET_DRINK = "SET_DRINK";
 */
 
 // Add Drink to App State
-export const setDrink = (code) => {
+export const setDrink = (drink) => {
   return async dispatch => {
     dispatch({
       type: SET_DRINK,
-      code: code,
+      drink: drink,
     });
   }
 }
@@ -20,7 +20,7 @@ export const setDrink = (code) => {
 const drinkReducer = (state = null, action ) => {
   switch (action.type) {
     case SET_DRINK:
-      return action.code;
+      return action.drink;
     default: 
       return state;
   }

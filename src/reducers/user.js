@@ -11,13 +11,22 @@ const SET_USER = "SET_USER";
 // Takes object with "sno": "Decimal number of Shaker", "hex": "Hexadecimal number of Shaker"
 // Returns User Object
 export const fetchUser = (shakerNumber) => {
-  const user = userService.fetch(shakerNumber);
-  console.log("User reducer found: ", user ? user.name : null);
-  return async dispatch => {
-    dispatch({
-      type: SET_USER,
-      user: user
-    })
+  const res = userService.fetch(shakerNumber);
+  console.log("User reducer found: ", res);
+  if (res.length === 1){
+    return async dispatch => {
+      dispatch({
+        type: SET_USER,
+        user: res[0]
+      })
+    }
+  } else {
+    return async dispatch => {
+      dispatch({
+        type: SET_USER,
+        user: null
+      })
+    }
   }
 };
 

@@ -89,7 +89,7 @@ const DrinkItem = (props) => {
         <Text>{item.description}</Text>
         <Text fontWeight="bold">{item.price}</Text>
 
-        <Pressable onPress={() => order(item.machineCodes)}>
+        <Pressable onPress={() => order(item)}>
           <Text style={styles.cardButton} fontWeight="bold">
             BUY
           </Text>

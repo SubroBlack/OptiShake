@@ -16,6 +16,8 @@ import theme from '../theme';
 import BastenGaoTrial from './BastenGaoTrial';
 import Settings from "./Settings";
 import AuthPage from './AuthPage';
+import ScanShaker from './ScanShaker';
+import Register from './Register';
 
 const styles = StyleSheet.create({
   container: {
@@ -67,8 +69,14 @@ useEffect(() => {
         <Route path="/settings" exact>
           <Settings />
         </Route>
+        <Route path="/scan" exact>
+          <ScanShaker />
+        </Route>
         <Route path="/auth" exact>
           <AuthPage />
+        </Route>
+        <Route path="/register" exact>
+          <Register />
         </Route>
         <Redirect to="/" />
       </NativeRouter>
@@ -76,7 +84,7 @@ useEffect(() => {
         Latest Reply from the Machine: {response}
       </Text>
       <Text>
-        Latest Drink Selected: {drink}
+        Latest Drink Selected: {drink ? drink.machineCodes.fullName : null}
       </Text>
       <Text>
         Current User: {user ? user.name : null}

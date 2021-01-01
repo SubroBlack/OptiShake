@@ -32,8 +32,8 @@ const Settings = () => {
   const port = useSelector(state => state.port);
 
     // checkDevices
-    const checkDevices = async () => {
-      await machine.devices(setDevices);
+    const checkDevices = () => {
+      machine.devices(setDevices);
     };
 
     // Function to Send the Data
