@@ -41,14 +41,14 @@ const AuthPage = () => {
   const warnRegister = () =>
     Alert.alert(
       "New Shaker",
-      "Do you want to purchase the Shaker?",
+      "The shaker is not registered yet. Do you want to purchase the Shaker?",
       [
         {
           text: "Cancel",
           onPress: () => history.push("/"),
           style: "cancel"
         },
-        { text: "OK", onPress: () => history.push("/register")}
+        { text: "Purchase", onPress: () => history.push("/register")}
       ],
       { cancelable: false }
     );
@@ -63,9 +63,10 @@ const AuthPage = () => {
 
   // Add Monthly Subscription Button
   const subscribe = () => {
+    // function to add subscription for 30days starting from current date
     const sub = user.subscription.filter(s => s.active);
     console.log("User's Subs: ", sub);
-    if (!sub.active){
+    if (sub.active === false){
       return (
         <View>
           <Pressable onPress={() => history.push("/subscribe")}>
@@ -80,10 +81,16 @@ const AuthPage = () => {
     }
   }
 
+  // Function to serve the Drink
+  // create an alert fisrt to warn the placement of the shaker under the nozzle
+  const serve = () => {
+    console.log("Serve the Drink now");
+  }
+
   return (
     <View style={styles.container}>
       {subscribe()}
-      <Pressable onPress={warnRegister}>
+      <Pressable onPress={serve}>
         <Text style={styles.cardButton} fontWeight="bold">
           Serve the Drink
         </Text>

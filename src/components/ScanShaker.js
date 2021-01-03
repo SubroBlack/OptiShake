@@ -3,10 +3,11 @@ Uses Reader Module to Scan the Shaker RFID using RFID reader and then send the r
  Card numbers to Database for Owner Identification
 */
 
-import React from "react";
+import React, { useState } from "react";
 import {useDispatch} from "react-redux";
 import { View, StyleSheet, Pressable } from "react-native";
 import Text from "./Text";
+import ReaderModule from "../modules/ReaderModule";
 import theme from "../theme";
 
 import {fetchUser} from "../reducers/user"
@@ -48,34 +49,31 @@ const styles = StyleSheet.create({
 const ScanShaker = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-
-
+  const [card, setCard] = useState(null);
   /*
   Use Scan function to get the shaker info, set it on component state with useState,
   use useEffect hook to call fetchUser from reducer and put state.shaker as dependency 
   so the useEffect hook gets called when shaker's info is changed
   */
 
-  // Cards
-  const cards = [
-    {
-      sno: "0102966538",
-      hex: "0623250A"
-    },
-    {
-      sno: "0123",
-      hex: "ABCD"
-    },
-    {
-      sno: "01sdf23",
-      hex: "ABCasdD"
-    }
-  ]
-
   // Function to Scan the Shaker through RFID Reader
-  const scan = () => {
-    dispatch(fetchUser(cards[2]));
-    history.push("/auth");
+  // -- Implement through Reducer
+  const scan = async () => {
+    try {
+      const res = await ReaderModule.TestM1();
+      setCard(res);
+      if(card && card.cardNum){
+        const id = {cardNum: card.cardNum, cardNumHex: card.cardNumHex}
+        console.log("The Reader Module from ScanShaker: ", id);
+        dispatch(fetchUser(id));
+        history.push("/auth");
+      } else {
+        // Notification for Scan Again
+        console.log("Invalid: ", res.status)
+      }
+    } catch (e) {
+      console.error("Error Scan Shaker", e);
+    }
   }
 
   return (
@@ -89,9 +87,6 @@ const ScanShaker = () => {
             Scan
           </Text>
         </Pressable>
-      </View>
-      <View style={styles.graphicsArea}>
-        
       </View>
     </View>  
   );
