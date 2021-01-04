@@ -49,7 +49,7 @@ useEffect(() => {
 
 // Setting the Port 
 const port = useSelector(state => state.port);
-console.log("Main Port", port);
+console.log("Main Port", port ? port.path : port);
 
 // Listen to the Port
 useEffect(() => {
@@ -84,7 +84,7 @@ useEffect(() => {
         Latest Reply from the Machine: {response}
       </Text>
       <Text>
-        Latest Drink Selected: {drink ? drink.machineCodes.fullName : null}
+        Latest Drink Selected: {drink ? drink.fullName : null}
       </Text>
       <Text>
         Current User: {user ? user.name : null}

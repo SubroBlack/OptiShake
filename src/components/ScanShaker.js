@@ -63,8 +63,7 @@ const ScanShaker = () => {
       const res = await ReaderModule.TestM1();
       setCard(res);
       if(card && card.cardNum){
-        const id = {cardNum: card.cardNum, cardNumHex: card.cardNumHex}
-        console.log("The Reader Module from ScanShaker: ", id);
+        const id = {cardNum: card.cardNum, cardNumHex: card.cardNumHex};
         dispatch(fetchUser(id));
         history.push("/auth");
       } else {

@@ -9,7 +9,7 @@ import {useSelector, useDispatch} from "react-redux";
 import { View, StyleSheet, Pressable, Alert } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
-
+import {command} from "../reducers/command";
 import {fetchUser} from "../reducers/user"
 import { useHistory } from "react-router-dom";
 
@@ -36,6 +36,8 @@ const AuthPage = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const port = useSelector(state => state.port);
+  const drink = useSelector(state => state.drink);
 
   // Creating ALERT message
   const warnRegister = () =>
@@ -84,7 +86,8 @@ const AuthPage = () => {
   // Function to serve the Drink
   // create an alert fisrt to warn the placement of the shaker under the nozzle
   const serve = () => {
-    console.log("Serve the Drink now");
+    console.log("Serve the Drink now: ", drink.fullName);
+    dispatch(command(port, drink.machineCodes.order));
   }
 
   return (

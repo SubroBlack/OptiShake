@@ -43,9 +43,8 @@ const listen = (port, callBack) => {
 // Function to Send Commands to the Machine
 const command = async (port, code) => {
   try {
-    console.log('The end ', port, 'and the data send ', code);
+    console.log('The end ', port.path, 'and the data send ', code);
     const res = await port.send(code);
-    console.log('Drink Ordered: ', res);
     return res;
   } catch (error) {
     console.log(error);
