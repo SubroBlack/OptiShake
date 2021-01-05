@@ -3,7 +3,7 @@ Uses Reader Module to Scan the Shaker RFID using RFID reader and then send the r
  Card numbers to Database for Owner Identification
 */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {useDispatch} from "react-redux";
 import { View, StyleSheet, Pressable } from "react-native";
 import Text from "./Text";
@@ -56,20 +56,24 @@ const ScanShaker = () => {
   so the useEffect hook gets called when shaker's info is changed
   */
 
+  useEffect(() => {
+    if(card && card.cardNum){
+      const id = {cardNum: card.cardNum, cardNumHex: card.cardNumHex};
+      dispatch(fetchUser(id));
+      history.push("/auth");
+    } else {
+      // Notification for Scan Again
+      console.log(card ? card.status : null);
+    }
+  }, [card])
+
   // Function to Scan the Shaker through RFID Reader
   // -- Implement through Reducer
   const scan = async () => {
     try {
       const res = await ReaderModule.TestM1();
+      console.log("Scanned Card: ", res);
       setCard(res);
-      if(card && card.cardNum){
-        const id = {cardNum: card.cardNum, cardNumHex: card.cardNumHex};
-        dispatch(fetchUser(id));
-        history.push("/auth");
-      } else {
-        // Notification for Scan Again
-        console.log("Invalid: ", res.status)
-      }
     } catch (e) {
       console.error("Error Scan Shaker", e);
     }
