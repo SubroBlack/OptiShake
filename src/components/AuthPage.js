@@ -1,7 +1,8 @@
 /*
   Checks if the Current User is valid User and if they have active subscription,
-  Sends to Subscription Page/Registration Page accordingly if needed 
-  else Serves the Drink
+  Route to Registration Page accordingly if needed
+  Add Subscription Function
+  else Serves the Drink with warning
 */
 
 import React, { useEffect, useState } from "react";
@@ -10,8 +11,9 @@ import { View, StyleSheet, Pressable, Alert } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
 import {command} from "../reducers/command";
-import {fetchUser} from "../reducers/user"
+import {fetchUser, subscribe} from "../reducers/user"
 import { useHistory } from "react-router-dom";
+//import Subscribe from "./Subscribe";
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     padding: theme.padding.medium,
   },
-  cardButton: {
+  button: {
     padding: theme.padding.medium,
     backgroundColor: theme.backgroundColors.primary,
     color: theme.colors.lightText,
@@ -30,58 +32,20 @@ const styles = StyleSheet.create({
   }
 })
 
-const AuthPage = () => {
-
-  const user = useSelector(state => state.user);
-
+const AuthPage = () => {  
   const dispatch = useDispatch();
   const history = useHistory();
   const port = useSelector(state => state.port);
   const drink = useSelector(state => state.drink);
-
-  // Creating ALERT message
-  const warnRegister = () =>
-    Alert.alert(
-      "New Shaker",
-      "The shaker is not registered yet. Do you want to purchase the Shaker?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => history.push("/"),
-          style: "cancel"
-        },
-        { text: "Purchase", onPress: () => history.push("/register")}
-      ],
-      { cancelable: false }
-    );
-
+  const user = useSelector(state => state.user);
+  console.log("AuthPage User: ", user);
 
   // Check if the valid user is present and redirect to Register Page if not
   if (user === null){
     console.log("Auth Page user: ", user);
-    warnRegister();
+    history.push("/register");
     return null;
   };
-
-  // Add Monthly Subscription Button
-  const subscribe = () => {
-    // function to add subscription for 30days starting from current date
-    const sub = user.subscription.filter(s => s.active);
-    console.log("User's Subs: ", sub);
-    if (sub.active === false){
-      return (
-        <View>
-          <Pressable onPress={() => history.push("/subscribe")}>
-            <Text style={styles.cardButton} fontWeight="bold">
-              Add Monthly Subscription
-            </Text>
-          </Pressable>
-        </View>
-      )
-    } else {
-      return null;
-    }
-  }
 
   // Function to serve the Drink
   // create an alert fisrt to warn the placement of the shaker under the nozzle
@@ -90,15 +54,33 @@ const AuthPage = () => {
     dispatch(command(port, drink.machineCodes.order));
   }
 
+  const sub = user.subscription ? user.subscription.filter(s => s.active): null;
+
   return (
     <View style={styles.container}>
-      {subscribe()}
+      {user ? 
+        <Text fontSize="subheading" fontWeight="bold" color="textSecondary">
+          Welcome {user.fullName}
+        </Text>
+        : null
+      }
+      { sub.length !== 0 ? 
+        <Text>
+          You have an active subscription ending at {sub[0].end.toString()}
+        </Text> :
+        <Pressable onPress={() => history.push("/subscribe")}>
+          <Text style={styles.button} fontWeight="bold">
+            Get Subscription
+          </Text>
+        </Pressable>
+      }
+
       <Pressable onPress={serve}>
-        <Text style={styles.cardButton} fontWeight="bold">
+        <Text style={styles.button} fontWeight="bold">
           Serve the Drink
         </Text>
       </Pressable>
-    </View>  
+    </View>
   );
 }
 

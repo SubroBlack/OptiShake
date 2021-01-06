@@ -3,12 +3,11 @@
 */
 import React, { useState } from "react";
 import {useSelector, useDispatch} from "react-redux";
-import { useHistory } from "react-router-dom";
 import { View, StyleSheet, Pressable } from "react-native";
 import Text from "./Text";
-import FormikTextInput from "./FormikTextInput";
-import {Formik} from "formik";
 import theme from "../theme";
+import { subscribe } from "../reducers/user";
+import { useHistory } from "react-router-dom";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,21 +26,29 @@ const styles = StyleSheet.create({
   }
 })
 
-// Initial Value
-const initial = {
-  name: ""
-}
+  // Add Monthly Subscription Button
+  const Subscribe = () => {
 
-// Subscribe Form to be rendered through Formik
-const SubscribeForm = ({onSubmit}) => {
-  return (
-    <View>
-      <FormikTextInput name="name" placeholder="Full Name"  />
-      <Pressable onPress={onSubmit}>
-        <Text style={styles.button}>Buy Shaker</Text>
-      </Pressable>
-    </View>
-  )
-}
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const user = useSelector(state => state.user);
+    const sub = user.subscription.filter(s => s.active);
+    
+    if (sub.length > 0 ){
+      console.log("User's Subs: ", sub);
+      history.push("/auth")
+      return null;
+    }
 
+    return (
+      <View>
+          <Pressable onPress={() => {dispatch(subscribe(user.shaker[0])); history.push("/auth")}}>
+            <Text style={styles.button} fontWeight="bold">
+              Add Monthly Subscription
+            </Text>
+          </Pressable>
+        </View>
+    )
+  }
 
+  export default Subscribe;

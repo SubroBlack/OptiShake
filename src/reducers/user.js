@@ -7,28 +7,36 @@ import userService from "../services/user";
 // Action Type
 const SET_USER = "SET_USER";
 
+// Action
+const setUser = (user) => {
+  return async dispatch => {
+    dispatch({
+      type: SET_USER,
+      user: user,
+    });
+  }
+}
+
 // Find the User according to shaker number and put it as APP state
 // Takes object with "sno": "Decimal number of Shaker", "hex": "Hexadecimal number of Shaker"
 // Returns User Object
 export const fetchUser = (shakerNumber) => {
-  const res = userService.fetch(shakerNumber);
-  console.log("User reducer found: ", res);
-  if (res.length === 1){
-    return async dispatch => {
-      dispatch({
-        type: SET_USER,
-        user: res[0]
-      })
-    }
-  } else {
-    return async dispatch => {
-      dispatch({
-        type: SET_USER,
-        user: null
-      })
-    }
-  }
+  const res = userService.fetchByShaker(shakerNumber);
+  return async dispatch => {
+    dispatch({
+      type: SET_USER,
+      user: res
+    });
+  };
 };
+
+// Adding a new User
+export const addUser = (name) => {
+  return async (dispatch) => {
+    const res = userService.addUser(name);
+    dispatch(setUser(res));
+  }
+}
 
 // Clear a user 
 export const clearUser = () => {
@@ -37,6 +45,14 @@ export const clearUser = () => {
       type: SET_USER,
       user: null
     })
+  }
+}
+
+// Subscribe
+export const subscribe = (shakerId) => {
+  return async dispatch => {
+    const res = userService.subscribe(shakerId);
+    dispatch(setUser(res));
   }
 }
 

@@ -50,11 +50,21 @@ const ScanShaker = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [card, setCard] = useState(null);
-  /*
-  Use Scan function to get the shaker info, set it on component state with useState,
-  use useEffect hook to call fetchUser from reducer and put state.shaker as dependency 
-  so the useEffect hook gets called when shaker's info is changed
-  */
+
+  const ids = [
+    {
+      "cardNum": "0102966538",
+      "cardNumHex": "0623250A"
+    },
+    {
+      "cardNum": "0123",
+      "cardNumHex": "ABCD"
+    },
+    {
+      "cardNum": "24235",
+      "cardNumHex": "ASDASDASD"
+    }
+  ]
 
   useEffect(() => {
     if(card && card.cardNum){
@@ -63,7 +73,7 @@ const ScanShaker = () => {
       history.push("/auth");
     } else {
       // Notification for Scan Again
-      console.log(card ? card.status : null);
+      console.log(card ? card.status : "Scan: ", null);
     }
   }, [card])
 
@@ -71,8 +81,8 @@ const ScanShaker = () => {
   // -- Implement through Reducer
   const scan = async () => {
     try {
-      const res = await ReaderModule.TestM1();
-      console.log("Scanned Card: ", res);
+      //const res = await ReaderModule.TestM1();
+      const res = ids[1];
       setCard(res);
     } catch (e) {
       console.error("Error Scan Shaker", e);

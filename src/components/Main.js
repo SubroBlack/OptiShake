@@ -18,6 +18,7 @@ import Settings from "./Settings";
 import AuthPage from './AuthPage';
 import ScanShaker from './ScanShaker';
 import Register from './Register';
+import Subscribe from './Subscribe';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,7 +48,7 @@ useEffect(() => {
   dispatch(openPort());
 }, [])
 
-// Setting the Port 
+// Setting the Port
 const port = useSelector(state => state.port);
 console.log("Main Port", port ? port.path : port);
 
@@ -78,16 +79,19 @@ useEffect(() => {
         <Route path="/register" exact>
           <Register />
         </Route>
+        <Route path="/subscribe" exact>
+          <Subscribe />
+        </Route>
         <Redirect to="/" />
       </NativeRouter>
       <Text>
         Latest Reply from the Machine: {response}
       </Text>
       <Text>
-        Latest Drink Selected: {drink ? drink.fullName : null}
+        Latest Drink Selected: {drink ? drink.name : null}
       </Text>
       <Text>
-        Current User: {user ? user.name : null}
+        Current User: {user ? user.fullName : null}
       </Text>
     </View>
   );

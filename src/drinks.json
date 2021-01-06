@@ -1,7 +1,7 @@
 [
   {
     "id": "Chocolate Drink",
-    "fullName": "Chocolate Drink",
+    "name": "Chocolate Drink",
     "description": "Best Recovery Drink after workout",
     "price": "1 Euro",
     "machineCodes": {
@@ -16,7 +16,7 @@
   },
   {
     "id": "Overnight Protein",
-    "fullName": "Overnight Protein",
+    "name": "Overnight Protein",
     "description": "Best protein in the market",
     "price": "2 Euro",
     "machineCodes": {
@@ -31,7 +31,7 @@
   },
   {
     "id": "ultimate",
-    "fullName": "ultimate",
+    "name": "ultimate",
     "description": "The Ulimate Recovery Drink",
     "price": "3 Euros",
     "machineCodes": {
@@ -46,7 +46,7 @@
   },
   {
     "id": "Full Vegan Meal",
-    "fullName": "Full Vegan Meal",
+    "name": "Full Vegan Meal",
     "description": "Fully Nutritious Vegan Meal Drink",
     "price": "4 Euros",
     "machineCodes": {
@@ -61,7 +61,7 @@
   },
   {
     "id": "Penny Shake",
-    "fullName": "Penny Shake",
+    "name": "Penny Shake",
     "description": "Fully Nutritious Vegan Meal Drink",
     "price": "5 Euros",
     "machineCodes": {

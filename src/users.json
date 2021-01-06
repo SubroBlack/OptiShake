@@ -1,6 +1,6 @@
 [
   {
-    "name": "Michael Corleone",
+    "fullName": "Michael Corleone",
     "homeGym": "Loop Martial Arts",
     "shaker": [
       {
@@ -36,7 +36,7 @@
     ]
   },
   {
-    "name": "Jack Torrance",
+    "fullName": "Jack Torrance",
     "homeGym": "Overlook Hotel",
     "shaker": [
       {
