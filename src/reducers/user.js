@@ -2,6 +2,7 @@
 The Reducer to take the SNo of the Shaker RFID card and search the Owner user if registered
 */
 
+import machineService from "../services/machine";
 import userService from "../services/user";
 
 // Action Type
@@ -53,6 +54,21 @@ export const subscribe = (shakerId) => {
   return async dispatch => {
     const res = userService.subscribe(shakerId);
     dispatch(setUser(res));
+  }
+}
+
+// Ordering a Drink
+// Takes in User Obj, Port and Drink Command Code and sends the signal to the Machine and updates Drink Count in User
+export const orderDrink = (user, port, orderCode) => {
+  const res = machineService.command(port, orderCode);
+  if(res.status === "failed"){
+    console.log("User Reducer, drink order failed: ", res);
+  } else {
+    return async dispatch => {
+      const result = userService.drink(user);
+      // dispatch(setUser(result));
+      dispatch(setUser(user));  // Temp Line until service works with backend
+    }
   }
 }
 

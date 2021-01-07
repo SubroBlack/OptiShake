@@ -16,18 +16,6 @@ export const listenNew = (port) => {
   }
 }
 
-/*
-// Subscribe to a port
-export const listenAc = data => {
-  return async dispatch => {
-    dispatch({
-      type: SET_RESPONSE,
-      data
-    })
-  }
-}
-*/
-
 // Response Reducer
 const responseReducer = (state = null, action ) => {
   switch (action.type) {

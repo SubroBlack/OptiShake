@@ -78,11 +78,10 @@ const ScanShaker = () => {
   }, [card])
 
   // Function to Scan the Shaker through RFID Reader
-  // -- Implement through Reducer
   const scan = async () => {
     try {
-      //const res = await ReaderModule.TestM1();
-      const res = ids[1];
+      const res = await ReaderModule.TestM1();
+      //const res = ids[0];
       setCard(res);
     } catch (e) {
       console.error("Error Scan Shaker", e);

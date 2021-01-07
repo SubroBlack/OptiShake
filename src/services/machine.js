@@ -48,7 +48,7 @@ const command = async (port, code) => {
     return res;
   } catch (error) {
     console.log(error);
-    return null;
+    return {status: "failed", result: error};
   }
 };
 
