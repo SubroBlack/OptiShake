@@ -20,7 +20,7 @@ public class MyAppPackage implements ReactPackage {
             ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
 
-        modules.add(new ReaderModule(reactContext));
+        //modules.add(new ReaderModule(reactContext));  // => Removed coz of change in Reader Hardware
 
         return modules;
     }

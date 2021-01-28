@@ -59,6 +59,13 @@ const theme = {
     small: 64,
     medium: 128,
     large: 256,
+  }, 
+  columnsDisplay: {
+    flex: 1,
+    flexDirection: "row",
+    flexGrow: 1,
+    justifyContent: "spaced-around",
+    alignItems: "center"
   }
 };
 

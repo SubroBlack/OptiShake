@@ -53,16 +53,13 @@ const ScanShaker = () => {
 
   const ids = [
     {
-      "cardNum": "0102966538",
-      "cardNumHex": "0623250A"
+      "cardNum": "0623250a",
     },
     {
-      "cardNum": "0123",
-      "cardNumHex": "ABCD"
+      "cardNum": "045df5726f6f80",
     },
     {
       "cardNum": "24235",
-      "cardNumHex": "ASDASDASD"
     }
   ]
 

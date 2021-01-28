@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Platform, Text } from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -10,15 +10,18 @@ import {
 import {openPort} from "../reducers/port";
 import { listenNew } from '../reducers/response';
 
+import ReaderModule from "../modules/ReaderModule";
+
 import DrinksList from './DrinksList';
 import AppBar from './AppBar';
 import theme from '../theme';
-import BastenGaoTrial from './BastenGaoTrial';
-import Settings from "./Settings";
 import AuthPage from './AuthPage';
 import ScanShaker from './ScanShaker';
 import Register from './Register';
 import Subscribe from './Subscribe';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+import { fetchUser } from '../reducers/user';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,40 +38,47 @@ const styles = StyleSheet.create({
 
 const Main = () => {
 
-// States
-const response = useSelector(state => state.response);
-const drink = useSelector(state => state.drink);
-const user = useSelector(state => state.user);
+  const [key, setKey] = useState();
 
-// React.Redux Hooks
-const dispatch = useDispatch();
+  // States
+  const response = useSelector(state => state.response);
+  const drink = useSelector(state => state.drink);
+  const user = useSelector(state => state.user);
 
-// Make the Device Ready with port
-useEffect(() => {
-  dispatch(openPort());
-}, [])
+  // React.Redux Hooks
+  const dispatch = useDispatch();
 
-// Setting the Port
-const port = useSelector(state => state.port);
-console.log("Main Port", port ? port.path : port);
+  // Make the Device Ready with port
+  useEffect(() => {
+    dispatch(openPort());
+  }, [])
 
-// Listen to the Port
-useEffect(() => {
-  port ? dispatch(listenNew(port)): null;
-}, [port]);
+  // Setting the Port
+  const port = useSelector(state => state.port);
+  console.log("Main Port", port ? port.path : port);
+
+  // Listen to the Port
+  useEffect(() => {
+    port ? dispatch(listenNew(port)): null;
+  }, [port]);
+
+  // Scan RFID card Test Function
+  const feed = (data) => {
+    setKey(data);
+    dispatch(fetchUser(data));
+    console.log("The Scan Feed func from Main: ", typeof data, data);
+  }
+  ReaderModule.scan(feed);
+
 
   return (
     <View style={styles.container}>
       <NativeRouter>
-        <AppBar />  
+        
+        <AppBar />
+      
         <Route path="/" exact>
           <DrinksList />
-        </Route>
-        <Route path="/bastengao" exact>
-          <BastenGaoTrial />
-        </Route>
-        <Route path="/settings" exact>
-          <Settings />
         </Route>
         <Route path="/scan" exact>
           <ScanShaker />
@@ -82,6 +92,12 @@ useEffect(() => {
         <Route path="/subscribe" exact>
           <Subscribe />
         </Route>
+        <Route path="/signUp" exact>
+          <SignUp />
+        </Route>
+        <Route path="/signIn" exact>
+          <SignIn />
+        </Route>
         <Redirect to="/" />
       </NativeRouter>
       <Text>
@@ -92,6 +108,9 @@ useEffect(() => {
       </Text>
       <Text>
         Current User: {user ? user.fullName : null}
+      </Text>
+      <Text>
+        Scanned Key: {key}
       </Text>
     </View>
   );

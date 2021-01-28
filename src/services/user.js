@@ -24,10 +24,10 @@ const searchByName = (name) => {
 }
 
 // Function to fetch the User according to Shaker Number sno
-// Takes object with "CardNum": "Decimal number of Shaker", "cardNumHex": "Hexadecimal number of Shaker"
+// Takes object with "CardNum": "Hexadecimal number of Shaker" 045df5726f6f80 045df5726f6f80
 // Returns User
 const fetchByShaker = (id) => {
-  const res = Users.filter((user) => user.shaker.filter(card => card.cardNum === id.cardNum && card.cardNumHex === id.cardNumHex).length > 0);
+  const res = Users.filter((user) => user.shaker.filter(a => a.cardNum === id).length > 0);
   if (res.length === 1) {
     return res[0];
   } else {
