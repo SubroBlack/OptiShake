@@ -23,6 +23,8 @@ const AppBar = () => {
         <AppBarTab text="Home" to="/" />
         <AppBarTab text="SignIn" to="/signIn" />
         <AppBarTab text="SignUp" to="/signUp" />
+        <AppBarTab text="Phone" to="/regForm" />
+        <AppBarTab text="Register" to="/register" />
       </ScrollView>
     </View>
   );

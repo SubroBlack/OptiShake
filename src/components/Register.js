@@ -3,13 +3,14 @@
   Redirects to Authentication Page on Success
 */
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {useSelector, useDispatch} from "react-redux";
 import { useHistory } from "react-router-dom";
-import { View, StyleSheet, Pressable, Alert } from "react-native";
+import { View, StyleSheet, Pressable, Alert, TouchableOpacity } from "react-native";
+import PhoneInput from "react-native-phone-number-input";
 import Text from "./Text";
 import FormikTextInput from "./FormikTextInput";
-import {Formik} from "formik";
+import {Formik, useField} from "formik";
 import theme from "../theme";
 import { addUser } from "../reducers/user";
 
@@ -18,8 +19,7 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexGrow: 1,
-    alignItems: "stretch",
-    padding: theme.padding.medium,
+    padding: theme.padding.thick,
   },
   button: {
     padding: theme.padding.medium,
@@ -28,20 +28,121 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     borderRadius: 4,
     textAlign: "center",
+  },
+  wrapper: {
+    width: "100%",
+    padding: theme.padding.medium,
+    marginBottom: theme.margin.medium,
+    backgroundColor: theme.backgroundColors.light,
+    borderStyle: "solid",
+    borderWidth: theme.borders.thin,
+    borderColor: theme.backgroundColors.dark,
+    borderRadius: 5
+  },
+  wrapperError: {
+    borderColor: theme.colors.error
+  },
+  phoneInput: {
+    flexGrow: 1,
+  },
+  message: {
+
+  },
+  input: {
+    padding: theme.padding.medium,
+    marginBottom: theme.margin.medium,
+    backgroundColor: theme.backgroundColors.light,
+    borderStyle: "solid",
+    borderWidth: theme.borders.thin,
+    borderColor: theme.backgroundColors.dark,
+    borderRadius: 5
+  },
+  errorText: {
+    marginBottom: theme.margin.medium,
+    color: theme.colors.error,
   }
 })
 
 // Initial Value
 const initial = {
-  name: ""
+  name: "",
+  email: "",
+  phone: "",
 }
 
 // Register Form to be rendered through Formik
 const RegisterForm = ({onSubmit}) => {
+  const [value, setValue] = useState("");
+  const [formattedValue, setFormattedValue] = useState("");
+  const [valid, setValid] = useState(false);
+  const [showMessage, setShowMessage] = useState("");
+
+  // Formik Field for Phone input 
+  const [field, meta, helpers] = useField("phone");
+  const showError = meta.touched && meta.error;
+
+  const phoneInput = useRef();
+
+  // Validating The Input prop
+  const inputProps = {
+    onEndEditing : () => {
+      const checkValid = phoneInput.current?.isValidNumber(value);
+      //setValid(checkValid);
+      if(checkValid === false) {
+        //setShowMessage(meta.error);
+        setShowMessage("Invalid Phone Number");
+      } else {
+        setShowMessage(null);
+      }
+      //console.log("Phone Validation: ", checkValid, formattedValue, value);
+    }
+  }
+
+  // Validate Input
+  const validate = () => {
+    const checkValid = phoneInput.current?.isValidNumber(value);
+    //setValid(checkValid);
+    if(checkValid === true) {
+      setShowMessage(null);
+      //setShowMessage(meta.error);
+      //setShowMessage("Invalid Phone Number");
+    };
+  }
+
+  // Check Form function to check all and call submit function
+  const checkForm = () => {
+    const checkValid = phoneInput.current?.isValidNumber(value);
+    checkValid ? onSubmit() : console.log("Form not Filled Correctly");
+  }
+
   return (
     <View>
       <FormikTextInput name="name" placeholder="Full Name"  />
-      <Pressable onPress={onSubmit}>
+      <FormikTextInput name="email" placeholder="Email" keyboardType="email-address" />
+      <PhoneInput
+            ref={phoneInput}
+            //defaultValue={field.value}
+            value={field.value}
+            defaultCode="FI"
+            layout="first"
+            onChangeText={(text) => {
+              helpers.setValue(text);
+            }}
+            onChangeFormattedText={(text) => {
+              setValue(text);
+              setFormattedValue(text);
+              validate();
+            }}
+            containerStyle={ showError ? [styles.wrapper, styles.wrapperError] : styles.wrapper }
+            textContainerStyle= {styles.phoneInput}
+            textInputProps={inputProps}
+            withDarkTheme
+            //withShadow
+            //autoFocus
+          />
+          {/* showError && <Text style={styles.errorText}>{meta.error}</Text> */}
+          <Text style={styles.errorText}>{showMessage}</Text>
+      <Pressable onPress={checkForm}>
         <Text style={styles.button}>Buy Shaker</Text>
       </Pressable>
     </View>
@@ -74,10 +175,9 @@ const Register = () => {
 
   // onSubmit Function to Register new Shaker for a User
   const onSubmit = async (data) => {
-    const {name} = data;
     try {
-      console.log("Register component: ", name);
-      dispatch(addUser(name));
+      console.log("Register component: ", data);
+      dispatch(addUser(data));
       history.push("/auth");
     } catch (e) {
       console.log("Register Event Error: ", e);

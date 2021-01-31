@@ -36,10 +36,12 @@ const fetchByShaker = (id) => {
 }
 
 // Function to Add User/ (need to edit it to make it capable of checking user with same name and add the shaker for the profile)
-const addUser = (name) => {
-  console.log("Add the User in Users.json", name);
+const addUser = (user) => {
+  console.log("Add the User in Users.json", user);
   const res = userObj; 
-  res.fullName= name;
+  res.fullName= user.name;
+  res.email = user.email;
+  res.phone = user.phone;
   Users.concat(res);
   return res;
 }

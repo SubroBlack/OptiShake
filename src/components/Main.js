@@ -22,6 +22,7 @@ import Subscribe from './Subscribe';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import { fetchUser } from '../reducers/user';
+import FormikPhoneInput from './FormikPhoneInput';
 
 const styles = StyleSheet.create({
   container: {
@@ -97,6 +98,9 @@ const Main = () => {
         </Route>
         <Route path="/signIn" exact>
           <SignIn />
+        </Route>
+        <Route path="/regform" exact>
+          <FormikPhoneInput name="phone" placeHolder="You Phone Number" />
         </Route>
         <Redirect to="/" />
       </NativeRouter>

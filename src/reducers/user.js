@@ -32,9 +32,9 @@ export const fetchUser = (shakerNumber) => {
 };
 
 // Adding a new User
-export const addUser = (name) => {
+export const addUser = (user) => {
   return async (dispatch) => {
-    const res = userService.addUser(name);
+    const res = userService.addUser(user);
     dispatch(setUser(res));
   }
 }
