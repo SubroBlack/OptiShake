@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   },
   fontSizeSubheading: {
     fontSize: theme.fontSizes.subheading,
+    marginBottom: 10,
   },
   fontWeightBold: {
     fontWeight: theme.fontWeights.bold,

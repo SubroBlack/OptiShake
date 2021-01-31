@@ -6,6 +6,7 @@
 import React, { useState, useRef } from "react";
 import {useSelector, useDispatch} from "react-redux";
 import { useHistory } from "react-router-dom";
+import * as yup from "yup";
 import { View, StyleSheet, Pressable, Alert, TouchableOpacity } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
 import Text from "./Text";
@@ -20,14 +21,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexGrow: 1,
     padding: theme.padding.thick,
-  },
-  button: {
-    padding: theme.padding.medium,
-    backgroundColor: theme.backgroundColors.primary,
-    color: theme.colors.lightText,
-    fontWeight: "bold",
-    borderRadius: 4,
-    textAlign: "center",
   },
   wrapper: {
     width: "100%",
@@ -69,6 +62,13 @@ const initial = {
   email: "",
   phone: "",
 }
+
+// Form Validation with YUP
+const validationSchema = yup.object().shape({
+  name: yup.string().required("Name is Required"),
+  email: yup.string().email().required("Email is Required"),
+  phone: yup.string().required("Phone Number is Required")
+});
 
 // Register Form to be rendered through Formik
 const RegisterForm = ({onSubmit}) => {
@@ -141,9 +141,9 @@ const RegisterForm = ({onSubmit}) => {
             //autoFocus
           />
           {/* showError && <Text style={styles.errorText}>{meta.error}</Text> */}
-          <Text style={styles.errorText}>{showMessage}</Text>
+          <Text style={showMessage ? styles.errorText : theme.invisible }>{showMessage}</Text>
       <Pressable onPress={checkForm}>
-        <Text style={styles.button}>Buy Shaker</Text>
+        <Text style={theme.button}>Buy Shaker</Text>
       </Pressable>
     </View>
   )
@@ -189,7 +189,7 @@ const Register = () => {
       <Text fontSize="subheading" fontWeight="bold" color="textSecondary">
         Purchase the Shaker
       </Text>
-      <Formik initialValues={initial} onSubmit={warnRegister}>
+      <Formik initialValues={initial} onSubmit={warnRegister} validationSchema={validationSchema}>
         {({ handleSubmit }) => <RegisterForm onSubmit={handleSubmit} />}
       </Formik>
     </View>  

@@ -11,14 +11,6 @@ const styles = StyleSheet.create({
   container: {
     padding: theme.padding.medium
   },
-  button: {
-    backgroundColor: theme.backgroundColors.primary,
-    padding: theme.padding.thick,
-    borderRadius: 6,
-    color: theme.colors.lightText,
-    fontWeight: theme.fontWeights.bold,
-    textAlign: "center",
-  },
   columnsDisplay: {
     flex: 1,
     flexDirection: "row",
@@ -58,7 +50,7 @@ const SignUpForm = ({onSubmit}) => {
     <FormikTextInput name="contact" placeholder="Contact Number" keyboardType="phone-pad" />
 
     <Pressable onPress={onSubmit}>
-      <Text style={styles.button}>Sign Up</Text>
+      <Text style={theme.button}>Sign Up</Text>
     </Pressable>
 
   </View>

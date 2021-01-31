@@ -35,6 +35,11 @@ const styles = StyleSheet.create({
       default: theme.fonts.main,
     }),
   },
+  body: {
+    flexGrow: 1,
+    flexShrink: 1,
+    padding: theme.padding.medium,
+  },
 });
 
 const Main = () => {
@@ -77,32 +82,40 @@ const Main = () => {
       <NativeRouter>
         
         <AppBar />
-      
-        <Route path="/" exact>
-          <DrinksList />
-        </Route>
-        <Route path="/scan" exact>
-          <ScanShaker />
-        </Route>
-        <Route path="/auth" exact>
-          <AuthPage />
-        </Route>
-        <Route path="/register" exact>
-          <Register />
-        </Route>
-        <Route path="/subscribe" exact>
-          <Subscribe />
-        </Route>
-        <Route path="/signUp" exact>
-          <SignUp />
-        </Route>
-        <Route path="/signIn" exact>
-          <SignIn />
-        </Route>
-        <Route path="/regform" exact>
-          <FormikPhoneInput name="phone" placeHolder="You Phone Number" />
-        </Route>
-        <Redirect to="/" />
+
+        <View style={styles.body}>
+
+          <Text style={user ? theme.headerText : theme.invisible}>
+           {user ? "Welcome " + user.fullName : null}
+          </Text>
+        
+          <Route path="/" exact>
+            <DrinksList />
+          </Route>
+          <Route path="/scan" exact>
+            <ScanShaker />
+          </Route>
+          <Route path="/auth" exact>
+            <AuthPage />
+          </Route>
+          <Route path="/register" exact>
+            <Register />
+          </Route>
+          <Route path="/subscribe" exact>
+            <Subscribe />
+          </Route>
+          <Route path="/signUp" exact>
+            <SignUp />
+          </Route>
+          <Route path="/signIn" exact>
+            <SignIn />
+          </Route>
+          <Route path="/regform" exact>
+            <FormikPhoneInput name="phone" placeHolder="You Phone Number" />
+          </Route>
+          <Redirect to="/" />
+
+        </View>
       </NativeRouter>
       <Text>
         Latest Reply from the Machine: {response}

@@ -14,6 +14,8 @@ const styles = StyleSheet.create({
     height: theme.imageSize.large,
     width: theme.imageSize.large,
     marginRight: theme.margin.medium,
+    borderWidth: theme.borders.big,
+    borderColor: theme.backgroundColors.dark,
     borderRadius: 6,
     margin: theme.margin.thick
   },
@@ -90,7 +92,7 @@ const DrinkItem = (props) => {
         <Text fontWeight="bold">{item.price}</Text>
 
         <Pressable onPress={() => order(item)}>
-          <Text style={styles.cardButton} fontWeight="bold">
+          <Text style={theme.button} fontWeight="bold">
             BUY
           </Text>
         </Pressable>

@@ -15,14 +15,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: "stretch",
     padding: theme.padding.medium,
-  },
-  button: {
-    padding: theme.padding.medium,
-    backgroundColor: theme.backgroundColors.primary,
-    color: theme.colors.lightText,
-    fontWeight: "bold",
-    borderRadius: 4,
-    textAlign: "center",
   }
 })
 
@@ -43,7 +35,7 @@ const styles = StyleSheet.create({
     return (
       <View>
           <Pressable onPress={() => {dispatch(subscribe(user.shaker[0])); history.push("/auth")}}>
-            <Text style={styles.button} fontWeight="bold">
+            <Text style={theme.button} fontWeight="bold">
               Add Monthly Subscription
             </Text>
           </Pressable>

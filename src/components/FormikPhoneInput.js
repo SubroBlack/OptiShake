@@ -92,7 +92,7 @@ const FormikPhoneInput = ({name, ...props}) => {
               setValid(checkValid ? checkValid : false);
             }}
           >
-            <Text style={styles.button}>Check</Text>
+            <Text style={theme.button}>Check</Text>
           </TouchableOpacity>
         </SafeAreaView>
       </View>

@@ -16,11 +16,13 @@ const styles = StyleSheet.create({
   drinkList: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: theme.justifyContent.spaced,
-    alignItems: "center"
+    backgroundColor: theme.backgroundColors.baseColor,
+    alignItems: theme.alignItems.center,
+    //justifyContent: theme.justifyContent.spaced,
   },
   separator: {
     height: theme.margin.medium,
+    backgroundColor: theme.backgroundColors.baseColor,
   },
 
 });

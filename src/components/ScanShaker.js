@@ -29,14 +29,6 @@ const styles = StyleSheet.create({
     
     marginVertical: theme.margin.thin
   },
-  button: {
-    padding: theme.padding.medium,
-    backgroundColor: theme.backgroundColors.primary,
-    color: theme.colors.lightText,
-    fontWeight: "bold",
-    borderRadius: 4,
-    textAlign: "center",
-  },
   graphicsArea: {
     flexGrow: 1,
     padding: theme.padding.medium,
@@ -92,7 +84,7 @@ const ScanShaker = () => {
           Scan Your Shaker
         </Text>
         <Pressable onPress={scan}>
-          <Text style={styles.button} fontWeight="bold">
+          <Text style={theme.button} fontWeight="bold">
             Scan
           </Text>
         </Pressable>

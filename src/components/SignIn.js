@@ -12,14 +12,6 @@ import { signIn } from '../reducers/gymLogin';
 const styles = StyleSheet.create({
   container: {
     padding: theme.padding.medium
-  },
-  button: {
-    backgroundColor: theme.backgroundColors.primary,
-    padding: theme.padding.thick,
-    borderRadius: 6,
-    color: theme.colors.lightText,
-    fontWeight: theme.fontWeights.bold,
-    textAlign: "center",
   }
 });
 
@@ -42,7 +34,7 @@ const SignInForm = ({onSubmit}) => {
     <FormikTextInput name="email" placeholder="Email" keyboardType="email-address" />
     <FormikTextInput password={true} name="password" placeholder="Password" />
     <TouchableWithoutFeedback onPress={onSubmit}>
-      <Text style={styles.button}>Sign In</Text>
+      <Text style={theme.button}>Sign In</Text>
     </TouchableWithoutFeedback>
   </View>
     );

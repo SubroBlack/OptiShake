@@ -1,14 +1,19 @@
 const theme = {
   colors: {
-    textPrimary: "rgb(36, 41, 46)",
+    //OptiShake Black #26282e rgb(38, 40, 46)
+    // OptiShake Orange #e87b2e rgb(232, 123, 46)
+    textPrimary: "rgb(38, 40, 46)",
     textSecondary: "rgb(88, 96, 105)",
     lightText: "rgb(255, 255, 255)",
     error: "rgb(247, 17, 5)",
+
   },
   backgroundColors: {
     primary: "rgb(3, 102, 214)",
-    baseColor: "rgb(200, 200, 200)",
-    dark: "rgba(38, 38, 38, 0.90)",
+    baseColor: "rgb(232, 123, 46)",
+    //baseColor: "rgb(200, 200, 200)",
+    darkThrough: "rgba(38, 40, 46, 0.75)",
+    dark: "rgb(38, 40, 46)",
     light: "rgb(255, 255, 255)",
   },
   fontSizes: {
@@ -37,7 +42,8 @@ const theme = {
   borders: {
     thin: 1,
     medium: 2,
-    thick: 4
+    thick: 4,
+    big: 8
   },
   display: {
     flexContainer: "flex",
@@ -66,6 +72,24 @@ const theme = {
     flexGrow: 1,
     justifyContent: "spaced-around",
     alignItems: "center"
+  },
+  button: {
+    padding: 16,
+    backgroundColor: "rgb(38, 40, 46)",
+    color: "rgb(255, 255, 255)",
+    fontWeight: "bold",
+    borderRadius: 4,
+    textAlign: "center",
+  },
+  headerText: {
+    color: "rgb(38, 40, 46)",
+    fontWeight: "700",
+    fontSize: 16,
+    marginHorizontal: 8,
+    paddingVertical: 8,
+  },
+  invisible: {
+    display: "none"
   }
 };
 

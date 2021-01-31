@@ -20,17 +20,9 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     padding: theme.padding.medium,
   },
-  button: {
-    padding: theme.padding.medium,
-    backgroundColor: theme.backgroundColors.primary,
-    color: theme.colors.lightText,
-    fontWeight: "bold",
-    borderRadius: 4,
-    textAlign: "center",
-  }
 })
 
-const AuthPage = () => {  
+const AuthPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const port = useSelector(state => state.port);
@@ -78,14 +70,14 @@ const AuthPage = () => {
           You have an active subscription ending at {sub[0].end.toString()}
         </Text> :
         <Pressable onPress={() => history.push("/subscribe")}>
-          <Text style={styles.button} fontWeight="bold">
+          <Text style={theme.button} fontWeight="bold">
             Get Subscription
           </Text>
         </Pressable>
       }
 
       <Pressable onPress={serve}>
-        <Text style={styles.button} fontWeight="bold">
+        <Text style={theme.button} fontWeight="bold">
           Serve the Drink
         </Text>
       </Pressable>
