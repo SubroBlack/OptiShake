@@ -13,12 +13,14 @@
   const scan = (cb) => {
     let chars = "";
 
-    KeyEvent.onKeyDownListener((keyEvent) => {
+    KeyEvent.onKeyUpListener((keyEvent) => {
+      //console.log(" KeyCode: ", keyEvent.keyCode , "The pressed key is: ",keyEvent.pressedKey);
       if(keyEvent.keyCode === 66){
         cb(chars);
-        return chars;
+        chars = "";
+      } else {
+        chars = chars + keyEvent.pressedKey;
       }
-      chars = chars + keyEvent.pressedKey;
     });
   };
 

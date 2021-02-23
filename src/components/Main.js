@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Platform, Text } from 'react-native';
+import {StyleSheet, View, Platform, Text, Pressable } from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
 import {
   NativeRouter,
   Route,
   Redirect
 } from 'react-router-native';
+import {useHistory} from "react-router-dom";
 
-import {openPort} from "../reducers/port";
+import {closePort, openPort} from "../reducers/port";
 import { listenNew } from '../reducers/response';
 
 import ReaderModule from "../modules/ReaderModule";
@@ -16,13 +17,14 @@ import DrinksList from './DrinksList';
 import AppBar from './AppBar';
 import theme from '../theme';
 import AuthPage from './AuthPage';
-import ScanShaker from './ScanShaker';
 import Register from './Register';
 import Subscribe from './Subscribe';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import { fetchUser } from '../reducers/user';
 import FormikPhoneInput from './FormikPhoneInput';
+import UserGreet from './UserGreet';
+import { setKey } from '../reducers/key';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,20 +41,21 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     padding: theme.padding.medium,
-  },
+  }
 });
 
 const Main = () => {
-
-  const [key, setKey] = useState();
 
   // States
   const response = useSelector(state => state.response);
   const drink = useSelector(state => state.drink);
   const user = useSelector(state => state.user);
+  const key = useSelector(state => state.key);
+  const newShaker = useSelector(state => state.newShaker);
 
   // React.Redux Hooks
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // Make the Device Ready with port
   useEffect(() => {
@@ -61,39 +64,42 @@ const Main = () => {
 
   // Setting the Port
   const port = useSelector(state => state.port);
-  console.log("Main Port", port ? port.path : port);
+  //console.log("Main Port", port ? port.path : port);
 
   // Listen to the Port
   useEffect(() => {
     port ? dispatch(listenNew(port)): null;
+    return port ? () => {dispatch(closePort(port))} : undefined;
   }, [port]);
 
   // Scan RFID card Test Function
   const feed = (data) => {
-    setKey(data);
+    dispatch(setKey(data));
     dispatch(fetchUser(data));
-    console.log("The Scan Feed func from Main: ", typeof data, data);
   }
+  
   ReaderModule.scan(feed);
 
+  // Send to Registration Page if User is null 
+   useEffect(() => {
+    if(newShaker && user===null && key !== null){
+      console.log("Main User: ", user, " Key: ", key, " Goto REGISTRATION");
+      //history.push("/register");
+    }
+  }, [newShaker, user]);
 
   return (
     <View style={styles.container}>
       <NativeRouter>
         
-        <AppBar />
+        <AppBar />        
 
         <View style={styles.body}>
 
-          <Text style={user ? theme.headerText : theme.invisible}>
-           {user ? "Welcome " + user.fullName : null}
-          </Text>
+          <UserGreet />
         
           <Route path="/" exact>
             <DrinksList />
-          </Route>
-          <Route path="/scan" exact>
-            <ScanShaker />
           </Route>
           <Route path="/auth" exact>
             <AuthPage />
@@ -117,6 +123,7 @@ const Main = () => {
 
         </View>
       </NativeRouter>
+      
       <Text>
         Latest Reply from the Machine: {response}
       </Text>
@@ -124,10 +131,10 @@ const Main = () => {
         Latest Drink Selected: {drink ? drink.name : null}
       </Text>
       <Text>
-        Current User: {user ? user.fullName : null}
+        User: {user ? user.fullName : null}
       </Text>
       <Text>
-        Scanned Key: {key}
+        Key: {key}
       </Text>
     </View>
   );

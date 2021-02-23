@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     fontWeight: theme.fontWeights.bold,
     fontSize: theme.fontSizes.subheading,
     marginHorizontal: theme.margin.medium,
-    paddingVertical: theme.padding.thick,
+    paddingVertical: theme.padding.big,
   },
 });
 

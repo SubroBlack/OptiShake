@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList, View, StyleSheet, SafeAreaView, Text, Pressable } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useSelector, useDispatch } from "react-redux";
 import {useHistory} from "react-router-dom";
 import { command } from "../reducers/command";
@@ -18,13 +19,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: theme.backgroundColors.baseColor,
     alignItems: theme.alignItems.center,
-    //justifyContent: theme.justifyContent.spaced,
+    justifyContent: theme.justifyContent.spaced,
   },
   separator: {
     height: theme.margin.medium,
     backgroundColor: theme.backgroundColors.baseColor,
   },
-
+  buttonContainer: {
+    flexShrink: 1,
+    alignSelf: "flex-end",
+  },
+  joinButton: {
+    flexShrink: 1,
+    color: theme.colors.lightText,
+    fontSize: theme.fontSizes.subheading,
+  }
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
@@ -60,6 +69,14 @@ const DrinksList = () => {
       // other props
       contentContainerStyle={styles.drinkList}
       />
+      <Text style={styles.buttonContainer}>
+        <Icon
+          name="plus-circle"
+          style={styles.joinButton}
+          onPress={() => history.push("/register")}>
+          {" "}Join OptiShake
+        </Icon>
+      </Text>
     </SafeAreaView>
   );
 };

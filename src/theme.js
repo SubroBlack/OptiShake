@@ -32,12 +32,14 @@ const theme = {
   padding: {
     thin: 4,
     medium: 8,
-    thick: 16
+    thick: 16,
+    big: 32
   },
   margin: {
     thin: 4,
     medium: 8,
-    thick: 16
+    thick: 16,
+    big: 32,
   },
   borders: {
     thin: 1,
@@ -56,7 +58,7 @@ const theme = {
   },
   card: {
     display: "flex",
-    backgroundColor: "rgb(240, 240, 240)",
+    backgroundColor: "rgb(38, 40, 46)",
     borderRadius: 6,
     margin: 8,
     padding: 8,
@@ -87,6 +89,14 @@ const theme = {
     fontSize: 16,
     marginHorizontal: 8,
     paddingVertical: 8,
+    textAlign: "center",
+  },
+  subHeaderText: {
+    color: "rgba(38, 40, 46, 0.75)",
+    fontWeight: "700",
+    fontSize: 16,
+    marginHorizontal: 6,
+    paddingVertical: 6,
   },
   invisible: {
     display: "none"

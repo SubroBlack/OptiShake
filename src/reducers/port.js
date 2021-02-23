@@ -19,6 +19,14 @@ export const openPort = () => {
   }
 }
 
+// Closing a PORT
+export const closePort = (port) => {
+  return async (dispatch) => {
+    await machine.closePort(port);
+    dispatch(action(SET_PORT, null));
+  }
+}
+
 // Port Reducer
 const portReducer = (state = null, action ) => {
   switch (action.type) {

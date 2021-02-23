@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
   cardImage: {
     height: theme.imageSize.large,
     width: theme.imageSize.large,
-    marginRight: theme.margin.medium,
-    borderWidth: theme.borders.big,
-    borderColor: theme.backgroundColors.dark,
+    //marginRight: theme.margin.medium,
+    //borderWidth: theme.borders.big,
+    //borderColor: theme.backgroundColors.dark,
     borderRadius: 6,
     margin: theme.margin.thick
   },

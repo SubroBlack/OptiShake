@@ -14,16 +14,20 @@ const styles = StyleSheet.create({
   },
 });
 
+/*
+  <AppBarTab text="SignIn" to="/signIn" />
+  <AppBarTab text="SignUp" to="/signUp" />
+  <AppBarTab text="Phone" to="/regForm" />
+  <AppBarTab text="Register" to="/register" />
+*/
+
 
 const AppBar = () => {
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} horizontal>
-        <AppBarTab text="Home" to="/" />
-        <AppBarTab text="SignIn" to="/signIn" />
-        <AppBarTab text="SignUp" to="/signUp" />
-        <AppBarTab text="Phone" to="/regForm" />
+        <AppBarTab text="OptiShake" to="/" />
         <AppBarTab text="Register" to="/register" />
       </ScrollView>
     </View>

@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexGrow: 1,
-    padding: theme.padding.thick,
+    padding: theme.padding.big,
   },
   wrapper: {
     width: "100%",
@@ -186,7 +186,7 @@ const Register = () => {
 
   return (
     <View style={styles.container}>
-      <Text fontSize="subheading" fontWeight="bold" color="textSecondary">
+      <Text style={theme.subHeaderText}>
         Purchase the Shaker
       </Text>
       <Formik initialValues={initial} onSubmit={warnRegister} validationSchema={validationSchema}>

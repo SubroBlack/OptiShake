@@ -4,6 +4,8 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import commandReducer from "./reducers/command";
 import drinkReducer from "./reducers/drink";
+import keyReducer from "./reducers/key";
+import newShakerReducer from "./reducers/newShaker";
 
 import portReducer from "./reducers/port";
 import responseReducer from "./reducers/response";
@@ -13,8 +15,10 @@ const reducer = combineReducers({
   port: portReducer,
   response: responseReducer,
   command: commandReducer,
+  key: keyReducer,
   drink: drinkReducer,
-  user: userReducer
+  user: userReducer,
+  newShaker: newShakerReducer,
 });
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

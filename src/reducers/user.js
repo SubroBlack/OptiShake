@@ -4,6 +4,7 @@ The Reducer to take the SNo of the Shaker RFID card and search the Owner user if
 
 import machineService from "../services/machine";
 import userService from "../services/user";
+import { setNewShaker } from "./newShaker";
 
 // Action Type
 const SET_USER = "SET_USER";
@@ -19,15 +20,18 @@ const setUser = (user) => {
 }
 
 // Find the User according to shaker number and put it as APP state
-// Takes object with "sno": "Decimal number of Shaker", "hex": "Hexadecimal number of Shaker"
 // Returns User Object
 export const fetchUser = (shakerNumber) => {
-  const res = userService.fetchByShaker(shakerNumber);
+  
   return async dispatch => {
+    const res = await userService.fetchByShaker(shakerNumber);
+
     dispatch({
       type: SET_USER,
       user: res
     });
+    
+    res ? dispatch(setNewShaker(false)) : dispatch(setNewShaker(true));
   };
 };
 
