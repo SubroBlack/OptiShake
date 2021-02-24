@@ -3,7 +3,7 @@
   Redirects to Authentication Page on Success
 */
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {useSelector, useDispatch} from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
@@ -153,9 +153,19 @@ const RegisterForm = ({onSubmit}) => {
 const Register = () => {
 
   const user = useSelector(state => state.user);
+  const key = useSelector(state => state.key);
+  const newShaker = useSelector(state => state.newShaker);
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // Send to Drinks Page if User is valid after the Shaker is scanned
+  useEffect(() => {
+    if(user!==null && key !== null){
+      console.log("Main User: ", user, " Key: ", key, " Goto DRINKS");
+      history.push("/");
+    }
+  }, [user]);
 
   // Creating ALERT message
   const warnRegister = (data) =>

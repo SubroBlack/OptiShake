@@ -51,7 +51,6 @@ const Main = () => {
   const drink = useSelector(state => state.drink);
   const user = useSelector(state => state.user);
   const key = useSelector(state => state.key);
-  const newShaker = useSelector(state => state.newShaker);
 
   // React.Redux Hooks
   const dispatch = useDispatch();
@@ -77,16 +76,8 @@ const Main = () => {
     dispatch(setKey(data));
     dispatch(fetchUser(data));
   }
-  
-  ReaderModule.scan(feed);
 
-  // Send to Registration Page if User is null 
-   useEffect(() => {
-    if(newShaker && user===null && key !== null){
-      console.log("Main User: ", user, " Key: ", key, " Goto REGISTRATION");
-      //history.push("/register");
-    }
-  }, [newShaker, user]);
+  ReaderModule.scan(feed);
 
   return (
     <View style={styles.container}>

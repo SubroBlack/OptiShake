@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, View, StyleSheet, SafeAreaView, Text, Pressable } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useSelector, useDispatch } from "react-redux";
@@ -42,8 +42,19 @@ const DrinksList = () => {
 
   // Getting the port 
   const port = useSelector(state => state.port);
+  const user = useSelector(state => state.user);
+  const key = useSelector(state => state.key);
+  const newShaker = useSelector(state => state.newShaker);
   const dispatch = useDispatch();
   const history = useHistory();
+
+    // Send to Registration Page if User is null after the Shaker is scanned
+    useEffect(() => {
+      if(newShaker && user===null && key !== null){
+        console.log("Main User: ", user, " Key: ", key, " Goto REGISTRATION");
+        history.push("/register");
+      }
+    }, [newShaker, user]);
 
   // Order a drink
   /*
