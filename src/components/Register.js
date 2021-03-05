@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { View, StyleSheet, Pressable, Alert, TouchableOpacity } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
+import CheckBox from '@react-native-community/checkbox';
 import Text from "./Text";
 import FormikTextInput from "./FormikTextInput";
 import {Formik, useField} from "formik";
@@ -50,9 +51,23 @@ const styles = StyleSheet.create({
     borderColor: theme.backgroundColors.dark,
     borderRadius: 5
   },
+  check: {
+    flexDirection: "row",
+    padding: theme.padding.medium,
+    marginBottom: theme.margin.medium,
+    backgroundColor: theme.backgroundColors.light,
+    borderStyle: "solid",
+    borderWidth: theme.borders.thin,
+    borderColor: theme.backgroundColors.dark,
+    borderRadius: 5
+  },
   errorText: {
     marginBottom: theme.margin.medium,
     color: theme.colors.error,
+  },
+  checkPlaceholder: {
+    padding: theme.padding.thin,
+    color: "grey",
   }
 })
 
@@ -61,13 +76,14 @@ const initial = {
   name: "",
   email: "",
   phone: "",
+  shaker: "",
 }
 
 // Form Validation with YUP
 const validationSchema = yup.object().shape({
   name: yup.string().required("Name is Required"),
   email: yup.string().email().required("Email is Required"),
-  phone: yup.string().required("Phone Number is Required")
+  phone: yup.string().required("Phone Number is Required"),
 });
 
 // Register Form to be rendered through Formik
@@ -76,6 +92,7 @@ const RegisterForm = ({onSubmit}) => {
   const [formattedValue, setFormattedValue] = useState("");
   const [valid, setValid] = useState(false);
   const [showMessage, setShowMessage] = useState("");
+  const key = useSelector(state => state.key);
 
   // Formik Field for Phone input 
   const [field, meta, helpers] = useField("phone");
@@ -83,7 +100,7 @@ const RegisterForm = ({onSubmit}) => {
 
   const phoneInput = useRef();
 
-  // Validating The Input prop
+  // Validating The Phone Input using Input prop 
   const inputProps = {
     onEndEditing : () => {
       const checkValid = phoneInput.current?.isValidNumber(value);
@@ -104,21 +121,30 @@ const RegisterForm = ({onSubmit}) => {
     //setValid(checkValid);
     if(checkValid === true) {
       setShowMessage(null);
-      //setShowMessage(meta.error);
-      //setShowMessage("Invalid Phone Number");
+      setShowMessage(meta.error);
+      setShowMessage("Invalid Phone Number");
     };
   }
 
-  // Check Form function to check all and call submit function
+  // Check Form function to check all and call submit function if valid
   const checkForm = () => {
     const checkValid = phoneInput.current?.isValidNumber(value);
     checkValid ? onSubmit() : console.log("Form not Filled Correctly");
-  }
+  } 
 
   return (
     <View>
       <FormikTextInput name="name" placeholder="Full Name"  />
       <FormikTextInput name="email" placeholder="Email" keyboardType="email-address" />
+      <View style={ styles.check }>
+        <CheckBox
+          disabled={true}
+          value={key !== null ? true : false}
+        />
+        <Text style={styles.checkPlaceholder}>
+          {key ? "New Shaker" : "Scan a New Shaker"}
+        </Text>
+      </View>
       <PhoneInput
             ref={phoneInput}
             //defaultValue={field.value}
@@ -168,20 +194,32 @@ const Register = () => {
   }, [user]);
 
   // Creating ALERT message
-  const warnRegister = (data) =>
-  Alert.alert(
-    "New Shaker",
-    "The shaker is not registered yet. Do you want to purchase the Shaker?",
-    [
-      {
-        text: "Cancel",
-        onPress: () => history.push("/"),
-        style: "cancel"
-      },
-      { text: "Purchase", onPress: () => onSubmit(data)}
-    ],
-    { cancelable: false }
-);
+  const warnRegister = (data) => {
+    if (key === null) {
+      Alert.alert(
+        "Scan a New Shaker",
+        "",
+        [
+        ],
+        { cancelable: true }
+      )
+    } else {
+      data.shaker = key
+      Alert.alert(
+        "New Shaker",
+        "The shaker is not registered yet. Do you want to purchase the Shaker?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => history.push("/"),
+            style: "cancel"
+          },
+          { text: "Purchase", onPress: () => onSubmit(data)}
+        ],
+        { cancelable: false }
+      )
+    }
+  };
 
   // onSubmit Function to Register new Shaker for a User
   const onSubmit = async (data) => {

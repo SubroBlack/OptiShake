@@ -42,6 +42,7 @@ const addUser = (user) => {
   res.fullName= user.name;
   res.email = user.email;
   res.phone = user.phone;
+  res.shaker = res.shaker.concat(user.shaker);
   Users.concat(res);
   return res;
 }
