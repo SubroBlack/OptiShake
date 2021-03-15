@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {TouchableWithoutFeedback, View, StyleSheet} from "react-native";
 import {Formik} from "formik";
 import * as yup from "yup";
@@ -6,7 +6,8 @@ import Text from './Text';
 import theme from '../theme';
 import FormikTextInput from "./FormikTextInput";
 import {useHistory} from "react-router-native";
-import { signIn } from '../reducers/gymLogin';
+import { signGym, signIn } from '../reducers/gym';
+import { useSelector } from 'react-redux';
 
 
 const styles = StyleSheet.create({
@@ -17,13 +18,12 @@ const styles = StyleSheet.create({
 
 // Form Validation with YUP
 const validationSchema = yup.object().shape({
-  email: yup.string().email().required("Email is Required"),
-  password: yup.string().required("Password is Required")
+  gym: yup.string().required("Gym Name is Required"),
 });
 
 const initialCredentials = {
-  email: "",
-  password: ""
+  gym: "",
+  
 };
 
 // SignIn Form
@@ -31,8 +31,7 @@ const SignInForm = ({onSubmit}) => {
 
   return (
   <View>
-    <FormikTextInput name="email" placeholder="Email" keyboardType="email-address" />
-    <FormikTextInput password={true} name="password" placeholder="Password" />
+    <FormikTextInput name="gym" placeholder="Gym" />
     <TouchableWithoutFeedback onPress={onSubmit}>
       <Text style={theme.button}>Sign In</Text>
     </TouchableWithoutFeedback>
@@ -43,13 +42,22 @@ const SignInForm = ({onSubmit}) => {
 const SignIn = () => {
   
   const history = useHistory();
+  const gym = useSelector(state => state.gym);
+
+  // Send to Home Page if Gym is not NUll
+  useEffect(() => {
+    if(gym !== null){
+      console.log("Gym: ", gym, " Goto Home");
+      history.push("/");
+    }
+  });
 
   const onSubmit = async (values) => {
-    const {email, password} = values;
+    const {gymName} = values;
     try {
-      const {data} = await signIn(email, password);
-      console.log("SignIn Form: ", email, password);
-      //history.push("/");
+      const {data} = await signGym(gymName);
+      console.log("SignIn Form: ", gymName);
+      history.push("/");
     } catch (e) {
       console.log("Error: ", e);
     }
@@ -57,6 +65,9 @@ const SignIn = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={theme.subHeaderText}>
+        Add Name of your Gym
+      </Text>
       <Formik initialValues={initialCredentials} onSubmit={onSubmit} validationSchema={validationSchema}>
       {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
     </Formik>

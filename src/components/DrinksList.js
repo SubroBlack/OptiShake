@@ -4,11 +4,14 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useSelector, useDispatch } from "react-redux";
 import {useHistory} from "react-router-dom";
 import { command } from "../reducers/command";
-import {setDrink} from "../reducers/drink";
+import {clearDrink, setDrink} from "../reducers/drink";
 import theme from "../theme";
 import drinks from "../drinks.json";
 
 import DrinkItem from "./DrinkItem";
+import { clearKey } from "../reducers/key";
+import { clearUser } from "../reducers/user";
+import { setNewShaker } from "../reducers/newShaker";
 
 const styles = StyleSheet.create({
   container: {
@@ -44,17 +47,37 @@ const DrinksList = () => {
   const port = useSelector(state => state.port);
   const user = useSelector(state => state.user);
   const key = useSelector(state => state.key);
+  const gym = useSelector(state => state.gym);
   const newShaker = useSelector(state => state.newShaker);
   const dispatch = useDispatch();
   const history = useHistory();
 
-    // Send to Registration Page if User is null after the Shaker is scanned
-    useEffect(() => {
-      if(newShaker && user===null && key !== null){
-        console.log("Main User: ", user, " Key: ", key, " Goto REGISTRATION");
-        history.push("/register");
-      }
-    }, [newShaker, user]);
+  // Clear all store except port when opened
+
+  /* useEffect(() => {
+    console.log("Clear Store DrinkList");
+    dispatch(clearKey());
+    dispatch(setNewShaker(false));
+    dispatch(clearUser());
+    dispatch(clearDrink());
+  }, []) */
+  
+
+  // Send to Registration Page if User is null after the Shaker is scanned
+  useEffect(() => {
+    if(newShaker && user===null && key !== null){
+      console.log("Main User: ", user, " Key: ", key, " Goto REGISTRATION");
+      history.push("/register");
+    }
+  }, [newShaker, user]);
+  
+  // Send to SignIn Page if Gym is null
+  useEffect(() => {
+    if(gym === null){
+      console.log("Gym: ", gym, " Goto SignIn");
+      history.push("/signIn");
+    }
+  });
 
   // Order a drink
   /*

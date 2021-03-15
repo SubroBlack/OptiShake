@@ -20,11 +20,10 @@ import AuthPage from './AuthPage';
 import Register from './Register';
 import Subscribe from './Subscribe';
 import SignIn from './SignIn';
-import SignUp from './SignUp';
 import { fetchUser } from '../reducers/user';
-import FormikPhoneInput from './FormikPhoneInput';
 import UserGreet from './UserGreet';
 import { setKey } from '../reducers/key';
+import { logOut, setLoggedGym, signGym } from '../reducers/gym';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,10 +50,19 @@ const Main = () => {
   const drink = useSelector(state => state.drink);
   const user = useSelector(state => state.user);
   const key = useSelector(state => state.key);
+  const gym = useSelector(state => state.gym);
 
   // React.Redux Hooks
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // Setting up Gym 
+  useEffect(() => {
+    dispatch(setLoggedGym());
+  }, [dispatch]);
+
+  //dispatch(signGym("LassilaGym"));
+  //dispatch(logOut());
 
   // Make the Device Ready with port
   useEffect(() => {
@@ -101,14 +109,8 @@ const Main = () => {
           <Route path="/subscribe" exact>
             <Subscribe />
           </Route>
-          <Route path="/signUp" exact>
-            <SignUp />
-          </Route>
           <Route path="/signIn" exact>
             <SignIn />
-          </Route>
-          <Route path="/regform" exact>
-            <FormikPhoneInput name="phone" placeHolder="You Phone Number" />
           </Route>
           <Redirect to="/" />
 
@@ -126,6 +128,9 @@ const Main = () => {
       </Text>
       <Text>
         Key: {key}
+      </Text>
+      <Text>
+        Gym: {gym}
       </Text>
     </View>
   );

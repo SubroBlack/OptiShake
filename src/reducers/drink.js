@@ -16,6 +16,16 @@ export const setDrink = (drink) => {
   }
 }
 
+// Clear Drink 
+export const clearDrink = () => {
+  return async dispatch => {
+    dispatch ({
+      type: SET_DRINK,
+      drink: null
+    });
+  }
+}
+
 // Drink Reducer
 const drinkReducer = (state = null, action ) => {
   switch (action.type) {

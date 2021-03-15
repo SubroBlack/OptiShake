@@ -4,6 +4,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import commandReducer from "./reducers/command";
 import drinkReducer from "./reducers/drink";
+import gymReducer from "./reducers/gym";
 import keyReducer from "./reducers/key";
 import newShakerReducer from "./reducers/newShaker";
 
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   drink: drinkReducer,
   user: userReducer,
   newShaker: newShakerReducer,
+  gym: gymReducer
 });
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

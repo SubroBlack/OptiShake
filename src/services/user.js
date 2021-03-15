@@ -64,12 +64,14 @@ const subscribe = (shakerId) => {
 }
 
 // Add Drink Count 
-// Takes in the User obj and checks if it has active subscription, 
+// Takes in the Drink and User obj and checks if it has active subscription, 
 // records drink in subscription if subscription is active, 
 // else records the drink in the user obj
 // Returns the updated User obj fro
-const drink = (user) => {
+const drink = (user, served) => {
+
   console.log("User Service: order a drink and update the info in db");
+  return user;
 }
 
 export default {fetchByShaker, searchByName, addUser, subscribe, drink};

@@ -28,6 +28,7 @@ const AuthPage = () => {
   const port = useSelector(state => state.port);
   const drink = useSelector(state => state.drink);
   const user = useSelector(state => state.user);
+  const state = useSelector(state => state);
   console.log("AuthPage User: ", user);
 
   // Check if the valid user is present and redirect to Register Page if not
@@ -49,7 +50,7 @@ const AuthPage = () => {
           onPress: () => history.push("/"),
           style: "cancel"
         },
-        { text: "Okay", onPress: () => dispatch(orderDrink(user, port, drink.machineCodes.order))}
+        { text: "Okay", onPress: () => dispatch(orderDrink(user, port, drink))}
       ],
       { cancelable: false }
     )

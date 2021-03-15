@@ -1,5 +1,7 @@
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Text } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useHistory } from "react-router";
 
 import theme from "../theme";
 
@@ -9,27 +11,44 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.backgroundColors.dark,
     flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  menu: {
+    flexDirection: "row",
     paddingLeft: theme.padding.medium,
     paddingVertical: theme.padding.medium,
   },
+  rightAlign: {
+    flexShrink: 1,
+    alignSelf: "flex-end",
+    paddingRight: theme.padding.thick,
+    paddingVertical: theme.padding.thick,
+  },
+  iconButton: {
+    flexShrink: 1,
+    color: theme.colors.lightText,
+    fontSize: theme.fontSizes.subheading,
+    marginHorizontal: theme.margin.thick,
+    paddingVertical: theme.padding.big,
+  }
 });
-
-/*
-  <AppBarTab text="SignIn" to="/signIn" />
-  <AppBarTab text="SignUp" to="/signUp" />
-  <AppBarTab text="Phone" to="/regForm" />
-  <AppBarTab text="Register" to="/register" />
-*/
-
 
 const AppBar = () => {
 
+  const history = useHistory();
+
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView} horizontal>
-        <AppBarTab text="OptiShake" to="/" />
-        <AppBarTab text="Register" to="/register" />
-      </ScrollView>
+      <View style={styles.menu}>
+        <AppBarTab text="OptiShake" to="/" /> 
+      </View>
+      <View style={styles.rightAlign}>
+        <Icon
+          name="cog"
+          style={styles.iconButton}
+          onPress={() => history.push("/signin")}>
+        </Icon>
+      </View>
     </View>
   );
 };

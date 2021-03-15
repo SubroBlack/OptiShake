@@ -62,14 +62,20 @@ export const subscribe = (shakerId) => {
 }
 
 // Ordering a Drink
-// Takes in User Obj, Port and Drink Command Code and sends the signal to the Machine and updates Drink Count in User
-export const orderDrink = (user, port, orderCode) => {
-  const res = machineService.command(port, orderCode);
+// Takes in User Obj, Port and Drink and sends the signal to the Machine and updates Drink Count in User
+export const orderDrink = (user, port, drink, gym) => {
+  const res = machineService.command(port, drink.machineCodes.order);
   if(res.status === "failed"){
     console.log("User Reducer, drink order failed: ", res);
   } else {
     return async dispatch => {
-      const result = userService.drink(user);
+      const served = {
+        id: drink.id,
+        name: drink.name,
+        date: new Date(),
+        gym: gym
+      }
+      const result = userService.drink(user, served);
       // dispatch(setUser(result));
       dispatch(setUser(user));  // Temp Line until service works with backend
     }

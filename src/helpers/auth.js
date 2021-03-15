@@ -3,7 +3,7 @@
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-const checkLogged = async () => {
+const checkGym = async () => {
   try {
     const loggedGym = await AsyncStorage.getItem("OptiShakeGym");
     console.log("Helper found loggedGym: ", loggedGym);
@@ -15,7 +15,7 @@ const checkLogged = async () => {
 
 // Token of the LoggedIn
 const loggedGymToken = () => {
-  const gym = checkLogged();
+  const gym = checkGym();
 
   return `bearer ${gym}`;
 };
@@ -31,4 +31,4 @@ const loggedGymConfig = () => {
   return config;
 };
 
-export default {checkLogged, loggedGymToken};
+export default {checkGym, loggedGymToken, loggedGymConfig};
